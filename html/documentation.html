@@ -1,0 +1,325 @@
+<html>
+<head>
+    <title>CS440/640 Project 1: AI Gesture Recognition</title>
+</head>
+<style type="text/css">
+    #heading1
+    {
+        color: #888888;
+        font: bold 2.8em arial, sans-serif;
+    }
+    #heading2
+    {
+        color: #555555;
+        font: bold 1.4em arial, sans-serif;
+    }
+    #heading3
+    {
+        color: #222;
+        font: bold 1.4em verdana, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    #heading4
+    {
+        color: #222;
+        font: bold 1em verdana, sans-serif;
+    }
+    #container
+    {
+        text-align: justify;
+        width: 75%;
+        margin: 0 auto;
+        padding: 1em 2em;
+        background: #FFFFFF;
+        font: .8em "trebuchet ms" , arial, sans-serif;
+    }
+    table
+    {
+        font: 1em "trebuchet ms" , arial, sans-serif;
+    }
+    table th
+    {
+        color: #222;
+        text-align: left;
+        font: bold .9em "trebuchet ms" , arial, sans-serif;
+    }
+    #container p
+    {
+        font-family: Verdana, Geneva, sans-serif;
+    }
+    #container pre
+    {
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 12px;
+    }
+    .imagemomentstext
+    {
+        font-family: Verdana, Geneva, sans-serif;
+    }
+</style>
+</head>
+<body bgcolor="#222222">
+    <div id="container">
+        <div id="heading1">
+            CAS CS440/640 Artificial Intelligence  Spring 2015</div>
+        <div id="heading2"><br>
+            Project 1: AI Gesture Recognition</div>
+        <br>
+        <table width="25%">
+            <tr>
+                <td>
+                    Marika Lee
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Jungwoon Shin
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Masaya Ando
+                </td>
+            </tr>
+        </table>
+        <br>
+        <br>
+        <div id="heading3">
+            Problem Definition</div>
+        <p>
+        The goal of this assignment is to design and implement algorithms that delineate objects in video images
+        and analyze their shapes.  The program designs and implements algorithms that delineate hand shapes or gestures and create a graphical display that responds to the recognition of the hand shapes or gestures.
+        </p>
+        <br>
+        <div id="heading3">
+            Recognized Gestures</div>
+        <p>
+            Here is a list of our chosen gestures along with a short description of each:
+            <br>
+            <br>
+            <table width="50%">
+                <tr>
+                    <th>
+                        Gesture
+                    </th>
+                    <th>
+                        Hand Shapes Description
+                    </th>
+                </tr>
+                <tr>
+                    <td><br>
+                        Point 1 finger</a>
+                    </td>
+                    <td><br>
+                        The user should point 1 finger up to the ceiling and the graphical display will output "Number of fingers = 1" <br>
+                    </td> 
+                </tr>
+                <tr>
+                    <td><br>
+                        Point 2 fingers</a>
+                    </td>
+                    <td><br>
+                        The user should point 2 fingers up to the ceiling and the graphical display will output "Number of fingers = 2"
+                    </td>
+                </tr>
+                <tr>
+                    <td><br>
+                        Point 3 fingers</a>
+                    </td>
+                    <td><br>
+                        The user should point 3 fingers up to the ceiling and the graphical display will output "Number of fingers = 3"
+                    </td>
+                </tr>
+                <tr>
+                    <td><br>
+                        Point 4 fingers</a>
+                    </td>
+                    <td><br>
+                        The user should point 4 fingers up to the ceiling and the graphical display will output "Number of fingers = 4"
+                    </td>
+                </tr>
+                <tr>
+                    <td><br>
+                        Point 5 fingers</a>
+                    </td>
+                    <td><br>
+                        The user should point 5 fingers up to the ceiling and the graphical display will output "Number of fingers = 5"
+                    </td>
+                </tr>
+            </table>
+        </p>
+        <br>
+        <div id="heading3">
+            Method & Implementation</div>
+        <p>
+
+            <!--FILL THIS PART-->
+
+        </p>
+        Techniques used:
+        <p>
+            <div id="heading4">
+                Skin Detection</div>
+            <p>
+
+                Description of how we used skin detection in our program<br>
+                ....<br>
+                ....<br>
+                ....<br>
+
+                <!--FILL THIS PART-->
+
+            </p>
+            <div id="heading4">
+                Convex Hull</div>
+            <p>
+                Description of how we used convex hull in our program<br>
+                ....<br>
+                ....<br>
+                ....<br>
+
+                <!--FILL THIS PART-->
+            </p>
+
+            <p>
+            <div id="heading4">
+                Add more methods....</div>
+            <p>
+
+
+                <!--FILL THIS PART-->
+            </p>
+            
+            <div id="heading3">
+                Assumptions</div>
+            <ul>
+                <li>The user should be sitting in front of the still camera with their torso in the view of
+                    the camera and try to avoid any excessive movement with their body. </li>
+                <li>The user should try to be in a well lit area with a background that does not have
+                    many moving background objects and should have a background that doesn't blend with the user's skin color.</li>
+                <li>The user should not move their hand excessively while the program is computing the hand gestures. 
+            </ul>
+            <br />
+            <div id="heading3">
+                Code</div>
+            <p>
+                The following table contains hyperlinks to our code along with a short description
+                of each:
+                <br>
+                <br>
+                <table width="100%">
+                    <tr>
+                        <th width="30%">
+                            File Name
+                        </th>
+                        <th>
+                            File Description
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="src/main.cpp">main.cpp</a>
+                        </td>
+                        <td>
+                            This is the main class for A1.
+                        </td>
+                    </tr>
+                
+                </table>
+            </p>
+
+            <br>
+            <div id="heading3">
+                Experimental Results</div>
+            <br />
+            <div id="Div1">
+                Files
+                <p>
+                    <table>
+                        <tr>
+                            <td>
+                                <a href="testresults.txt">Test Results</a>
+                            </td>
+                            <td>
+                                Recording of test results of gesture detection
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="CS440-P1.wmv">Video 1</a>
+                            </td>
+                            <td>
+                                --Need to make the video--
+                                Video of preliminary work on the object tracker with debug output
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <a href="CS440-P2.wmv">Video 2</a>
+                            </td>
+                            <td>
+                                --Need to make the video--
+                                Video of final output
+                            </td>
+                        </tr>
+                    </table>
+                </p>
+            </div>
+
+            <br />
+            <div id="heading3">
+                Analysis of Results</div>
+            <p>
+                True positive detections
+                <ul>
+                    <li>Gesture 1 (Point 1 finger): ...</li>
+                    <li>Gesture 2 (Point 2 fingers): ...</li>
+                    <li>Gesture 3 (Point 3 fingers): ...</li>
+                    <li>Gesture 4 (Point 4 fingers): ...</li>
+                    <li>Gesture 5 (Point 5 fingers): ...</li>
+                </ul>
+                <br />
+                False negative detections
+                <ul>
+                    <li>Gesture 1 (Point 1 finger): ...</li>
+                    <li>Gesture 2 (Point 2 fingers): ...</li>
+                    <li>Gesture 3 (Point 3 fingers): ...</li>
+                    <li>Gesture 4 (Point 4 fingers): ...</li>
+                    <li>Gesture 5 (Point 5 fingers): ...</li>
+                </ul>
+                <br />
+                False positive detections
+                <ul>
+                    <li>Gesture 1 (Point 1 finger): ...</li>
+                    <li>Gesture 2 (Point 2 fingers): ...</li>
+                    <li>Gesture 3 (Point 3 fingers): ...</li>
+                    <li>Gesture 4 (Point 4 fingers): ...</li>
+                    <li>Gesture 5 (Point 5 fingers): ...</li>
+                </ul>
+                <br />
+
+                <div id="heading4">
+                    Difficulties</div>
+                <p>
+                    Some difficulties in recognizing gestures...
+                </p>
+                <div id="heading4">
+                    Potential future work</div>
+                <p>We need to fill this part still...</p>
+                </p>
+            </p>
+            <br>
+            <div id="heading3">
+                Conclusion</div>
+    	    <p>
+                We need to fill this part still...
+    	    </p>
+
+            <div id="heading3">
+                Sources</div>
+            <ul>
+                <li>http://simena86.github.io/blog/2013/08/12/hand-tracking-and-recognition-with-opencv/</li>
+    </div>
+</body>
+</html>
