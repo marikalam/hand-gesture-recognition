@@ -171,35 +171,77 @@ void Gesture::initVectors() {
     pointHull = vector<vector<Point>>(contours.size());
     defects = vector<vector<Vec4i>>(contours.size());
 }
-
+void Gesture::printText1(Mat src, string text, int x, int y){
+    int fontFace = FONT_HERSHEY_PLAIN;
+    putText(src,text,Point(x, y),fontFace, 2.3f,Scalar(200,0,0),2);
+}
 // printInfo()
 // Prints useful information about the current img->source
 void Gesture::printInfo(Mat src) {
     int fontFace = FONT_HERSHEY_PLAIN;
-    int x = src.rows / 1.6;
-    int y = src.cols / 1.5;
-    int dy = 14;
-    float fontSize = 0.7f;
-    Scalar fColor(245, 200, 200);
+    Scalar fColor(245,200,200);
+    int xpos=src.cols/1.5;
+    int ypos=src.rows/1.6;
+    float fontSize=0.7f;
+    int lineChange=14;
+    string info= "Figure info:";
+    putText(src,info,Point(ypos,xpos),fontFace,fontSize,fColor);
+    xpos+=lineChange;
+    info=string("Number of fingers: ") + string(int_to_string((numDefects+1))) ;
+    //	putText(src,info,Point(ypos,xpos),fontFace,fontSize ,fColor);
+    printText1(src,info,src.cols/2, src.rows/10+200);
     
-    string info = "Info:";
-    putText(src, info, Point(x, y), fontFace, fontSize, fColor);
-    y += dy;
     
-    info = string("Number of defecs: ") + string(int_to_string(numDefects));
-    putText(src, info, Point(x,  y), fontFace, fontSize, fColor);
-    y += dy;
     
-    info = string("Box Dimension (Height x Width):") + string(int_to_string(b_rect_height)) + string(" , ") + string(int_to_string(b_rect_width));
-    putText(src, info, Point(x,y), fontFace, fontSize, fColor);
-    y += dy;
     
-    info = string("Hand? : ") + string(bool_to_string(isHand));
-    putText(src, info, Point(x, y), fontFace, fontSize, fColor);
+    
+    
+    
+    //
+    //
+    //    int nono_count=0;
+    //    if (fingerTips.size()==1){
+    //
+    //
+    //        Point p = fingerTips[0];
+    //        int k=0;
+    //        putText(m->src,intToString(0),p-Point(0,30),fontFace, 1.2f,Scalar(200,200,200),2);
+    //        circle( m->src,p,   5, Scalar(100,255,100), 4 );
+    //
+    //
+    //    }
+    
+    
+    //    if (nrOfDefects==1) {
+    //        printText1(src,"HEllo it's one finger",src.cols/2, src.rows/10+150);
+    //
+    //    }  if (nrOfDefects==0) {
+    //        printText1(src,"It's a fist",src.cols/2, src.rows/10+150);
+    //
+    //    }
+    //    printText1(src,"fingerTips.size(): " + intToString((int)fingerTips.size()),src.cols/2, src.rows/10+150);
+    
+    //    if (fingerTips.size()==1) {
+    //        printText1(src,"HEllo it's one finger",src.cols/2, src.rows/10+150);
+    //
+    //    }  if (nrOfDefects==0) {
+    //        printText1(src,"It's a fist",src.cols/2, src.rows/10+150);
+    //
+    //    }
+    
+    xpos+=lineChange;
+    //	info=string("bounding box height, width ") + string(intToString(bRect_height)) + string(" , ") +  string(intToString(bRect_width)) ;
+    //	putText(src,info,Point(ypos,xpos),fontFace,fontSize ,fColor);
+    //    printText1(src,info,src.cols/2, src.rows/10+50);
+    
+    xpos+=lineChange;
+    //	info=string("Is hand: ") + string(bool2string(isHand));
+    //	putText(src,info,Point(ypos,xpos),fontFace,fontSize  ,fColor);
+    //    printText1(src,info,src.cols/2, src.rows/10+100);
 }
 
 // removeDefects()
-// Detects defective gestures and removes the endpoints from the detection
+// Detects unwanted defects and removes the endpoints from the detection
 void Gesture::removeDefects(Image *img) {
     int idxStart, idxEnd, idxFar;
     int valTolerance = b_rect_height / 5;
