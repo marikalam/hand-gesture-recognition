@@ -1,0 +1,302 @@
+<html>
+<head>
+    <title>CS440/640 Project 1: AI Gesture Recognition</title>
+</head>
+<style type="text/css">
+    #heading1
+    {
+        color: #888888;
+        font: bold 2.8em arial, sans-serif;
+    }
+    #heading2
+    {
+        color: #555555;
+        font: bold 1.4em arial, sans-serif;
+    }
+    #heading3
+    {
+        color: #222;
+        font: bold 1.4em verdana, sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+    #heading4
+    {
+        color: #222;
+        font: bold 1em verdana, sans-serif;
+    }
+    #container
+    {
+        text-align: justify;
+        width: 75%;
+        margin: 0 auto;
+        padding: 1em 2em;
+        background: #FFFFFF;
+        font: .8em "trebuchet ms" , arial, sans-serif;
+    }
+    table
+    {
+        font: 1em "trebuchet ms" , arial, sans-serif;
+    }
+    table th
+    {
+        color: #222;
+        text-align: left;
+        font: bold .9em "trebuchet ms" , arial, sans-serif;
+    }
+    #container p
+    {
+        font-family: Verdana, Geneva, sans-serif;
+    }
+    #container pre
+    {
+        font-family: Verdana, Geneva, sans-serif;
+        font-size: 12px;
+    }
+    .imagemomentstext
+    {
+        font-family: Verdana, Geneva, sans-serif;
+    }
+</style>
+</head>
+<body bgcolor="#222222">
+    <div id="container">
+        <div id="heading1">CAS CS440/640 Artificial Intelligence  Spring 2015</div>
+        <div id="heading2"><br>Programming Assignment 1: AI Gesture Recognition</div><br>
+        
+        <div id="heading2">Marika Lee, Jungwoon Shin, and Masaya Ando</div><br>
+        <div id="heading2">February 14, 2015</div>
+
+        <br><br>
+
+        <div id="heading3">Problem Definition</div>
+        <p>
+	        The goal of this assignment is to design and implement algorithms that delineate objects in video images
+	        and analyze their shapes.  The program designs and implements algorithms that delineate hand shapes or gestures and create a graphical display that responds to the recognition of the hand shapes or gestures.
+        </p>
+
+
+        <br>
+
+
+        <div id="heading3">Recognized Gestures</div>
+        <p>
+            Here is a list of our chosen gestures along with a short description of each:<br><br>
+            <table width="100%">
+                <tr>
+                    <th>Gesture</th>
+                    <th>Hand Shapes Description</th>
+                </tr>
+                <tr>
+                    <td><br>Point 1 finger</a></td>
+                    <td><br>The user should point 1 finger up to the ceiling and the graphical display will output "Number of fingers = 1" <br></td> 
+                </tr>
+                <tr>
+                    <td><br>Point 2 fingers</a></td>
+                    <td><br>The user should point 2 fingers up to the ceiling and the graphical display will output "Number of fingers = 2"</td>
+                </tr>
+                <tr>
+                    <td><br>Point 3 fingers</a></td>
+                    <td><br>The user should point 3 fingers up to the ceiling and the graphical display will output "Number of fingers = 3"</td>
+                </tr>
+                <tr>
+                    <td><br>Point 4 fingers</a></td>
+                    <td><br>The user should point 4 fingers up to the ceiling and the graphical display will output "Number of fingers = 4"</td>
+                </tr>
+                <tr>
+                    <td><br>Point 5 fingers</a></td>
+                    <td><br>The user should point 5 fingers up to the ceiling and the graphical display will output "Number of fingers = 5"</td>
+                </tr>
+            </table>
+        </p>
+
+
+        <br>
+
+
+        <div id="heading3">Method and Implementation</div>
+        <p>
+            <div id="heading4">Skin Detection</div>
+            <p>
+            	Skin color detection is a crucial component of our hand gesture detector because it allows the program to read the user's skin color at runtime and determine the skin color via color recognition. Because skin colors varies from person to person, it would be difficult to hard-code presets of colors into the code to let the program determine which part of the image is skin or not. 
+            	<br><br>
+            	Our skin color detection component is constructed using these functions in main.cpp: readPalm(), skinColorAvg(), getAverageColor(), getMedian(), produceBinary(), and normalizeColor(). 
+            	<br><br>
+            	When main() calls readPalm() to begin the skin color detection process, it outputs seven rectangles onto the screen which takes sample from the region and stores the colors inside a wrapper to be used by skinColorAvg(). A color profile is extracted from the scanning process by getting the median of HSV value at each rectangle. 
+            	<br><br><img src="images/readPalm.JPG" height="auto" width="50%"><br><br>
+            	
+            	Using this color profile created from readPalm() and a threshold, we produce seven binary images from the seven samples to subtract the hand from the background by calling produceBinary(). More specifically, this function sums these binary images and applies a non-linear filter medianBlur() to remove noises and smoothen the image. 
+            	<br><br><img src="images/produceBinary.JPG" height="auto" width="50%"><br><br>
+
+            	At the end of this process, the program should output an embedded screen on the right corner of the main output that shows the processed scene from the operations above.
+            </p>
+
+            <div id="heading4">Convex Hull</div>
+            <p>
+                After the program scanned the user's skin color and extracted the binary representation of the scene, a contour line that surrounds the general silhouette of the hand is drawn by function makeContours() using OpenCV's convex hull utility. A convex hull is a set of convexes such that if we take nay two points inside the region and join them to form a line, it lies entirely inside the set. Because other objects in the scene could also generate contour, we filter out unwanted contours by calling findMaxContour() which -as the function name implies- finds the contour with the biggest area which would usually be the hand because it is the closest to the camera. In the image below, the blue line surrounding the hand is the convex hull. 
+                <br><br><img src="images/convexhull.JPG" height="auto" width="50%"><br><br>
+
+                Because the convex hull's vertexes (known as convex points) lies on the finger tips of the hand, we can find the 'valley' between the fingers by getting the points (known as convex defects) furthest away from each convex points. We use OpenCV's convexityDefects() function to get the points. 
+
+                <br><br><img src="images/convex.JPG" height="auto" width="70%"> <br><br>
+
+                Essentially, the program looks for the deepest point of deviation on the contour to determine its defects. Although the program was able to capture the convex defects between the valleys of the fingers, it also produced undesired defects at the wrist (third image from the left shown above). We must filter out these unnecessary points. How? 
+                <br><br>
+                We used two factors to determine the dismissal of unnecessary defects: 
+                <ul>
+                	<li>Angle between fingers is more than 80 degrees</li>
+                	<li>Length of finger is less than 0.4 * Bounding Box</li>
+                </ul>
+                <img src="images/defects.JPG" height="auto" width="30%"><br><br>
+
+                If you take a look at your hand at static position, the angles between each finger never exceeds 80-90 degrees. Also the length of the finger must be at least 40% of the bounding box surrounding the hand. The function removeDefects() in gesture.cpp does such operation in our program. 
+            </p>
+        </p>
+
+
+		<br>
+
+
+        <div id="heading3">Assumptions</div>
+        <p>
+		    <ul>
+		        <li>The user should be sitting in front of the still camera with their torso in the view of the camera and try to avoid any excessive movement with their body. </li>
+		        <li>The user should try to be in a well lit area with a background that does not have many moving background objects and should have a background that doesn't blend with the user's skin color (preferably a black wall).</li>
+		        <li>The user should not move their hand excessively while the program is computing the hand gestures. </li>
+                <li>The user should make sure that the light isn't too bright that it creates a glare on the hand.</li>
+                <li>The user should spread their fingers apart as far as possible when the program is detecting the hand gesture.
+		    </ul>
+        </p>
+
+
+        <br>
+
+
+        <div id="heading3">Code</div>
+        <p>
+            <table width="100%">
+                <tr>
+                    <th>File Name</th>
+                    <th>File Description</th>
+                </tr>
+                <tr>
+                    <td><a href="src/main.cpp">main.cpp</a></td>
+                    <td>Contains functions for skin color detection</td>
+                </tr>
+                <tr>
+                    <td><a href="src/gesture.cpp">gesture.cpp</a></td>
+                    <td>Contains function to detect hands, draw contours, and count fingers</td>
+                </tr>
+                <tr>
+                    <td><a href="src/myroi.cpp">myroi.cpp</a></td>
+                    <td>Contains helper functions for skin color detection</td>
+                </tr>
+                <tr>
+                    <td><a href="src/image.cpp">image.cpp</a></td>
+                    <td>Contains image class to pass around the program for processing</td>
+                </tr>
+            
+            </table>
+        </p>
+
+
+        <br>
+
+
+        <div id="heading3">Experimental Results</div>
+        <p>
+            <table width="70%">
+                <tr>
+                    <th>File Name</th>
+                    <th>File Description</th>
+                </tr>
+                <tr>
+                    <td><a href="test_results/test_results.rtf">Test Results</a></td>
+                    <td>Recording of test results of gesture detection</td>
+                </tr>
+                <tr>
+                    <td><a href="video/handGestures.mov">Video</a></td>
+                    <td>Video of final output</td>
+                </tr>
+            </table>
+        </p>
+
+
+        <br>
+
+
+        <div id="heading3">Analysis of Results</div>
+        <p>
+            True positive detections
+            <ul>
+                <li>Gesture 1: (Point 1 finger): 24/30 = 80.0%</li>
+                <li>Gesture 2: (Point 2 fingers): 21/30 = 70.0%</li>
+                <li>Gesture 3: (Point 3 fingers): 14/30 = 46.7%</li>
+                <li>Gesture 4: (Point 4 fingers): 22/30 = 73.3%</li>
+                <li>Gesture 5: (Point 5 fingers): 25/30 = 83.3%</li>
+            </ul>
+            False negative detections
+            <ul>
+                <li>Gesture 1 (Point 1 finger): 0/30 = 0.0%</li>
+                <li>Gesture 2 (Point 2 fingers): 0/30 = 0.0%</li>
+                <li>Gesture 3 (Point 3 fingers): 0/30 = 0.0%</li>
+                <li>Gesture 4 (Point 4 fingers): 0/30 = 0.0%</li>
+                <li>Gesture 5 (Point 5 fingers): 0/30 = 0.0%</li>
+            </ul>
+            False positive detections
+            <ul>
+                <li>Gesture 1 (Point 1 finger): 4/30 = 13.3%</li>
+                <li>Gesture 2 (Point 2 fingers): 19/30 = 63.3%</li>
+                <li>Gesture 3 (Point 3 fingers): 7/30 = 23.3%</li>
+                <li>Gesture 4 (Point 4 fingers): 3/30 = 10.0%</li>
+                <li>Gesture 5 (Point 5 fingers): 4/30 = 13.3%</li>
+            </ul>
+
+            <div id="heading4">Difficulties</div>
+            <p>
+                <ul>
+                	<li>The program cannot detect a fist gesture. In other words, the program cannot count 0 fingers.</li>
+                	
+                </ul>
+            </p>
+
+            <div id="heading4">Potential future work</div>
+            <p>
+            	<ul>
+            		<li>Detection of thumb, index, middle, ring, and pinky finger</li>
+            		<li>Detection of certain hand gestures such as fist, peace sign, hi-five, 'Aloha' sign, etc</li>
+            	</ul>
+            </p>
+        </p>
+
+
+        <br>
+
+
+        <div id="heading3">Conclusion</div>
+		<p>
+            Although this was our group's first exposure to techniques to achieve recognizing hand gestures using OpenCV, our analysis of our results show that our program works successfully under controlled conditions. We clearly have a number of ways for expanding on the gesture recognizing into a more full-feature gesture recognition program, such as being able to determine types of hand movements and not just gestures. Also, in the future we can increase the robustness of the current functionality and be able to increase the time windows so more gestures can be analyzed within a single time window. Overall, our group feels satisfied with the results we achieved in this project.
+		</p>
+
+
+		<br>
+
+
+        <div id="heading3">Sources</div>
+        <p>
+            <ul>
+	            <li>"Hand Detection using Color Recognition" by Simen Andresen (GitHub: simena86)</li>
+	            <dl><a href="https://github.com/simena86/handDetectionCV">https://github.com/simena86/handDetectionCV</a></dl>
+	            <dl><a href="http://simena86.github.io/blog/2013/08/12/hand-tracking-and-recognition-with-opencv/">http://simena86.github.io/blog/2013/08/12/hand-tracking-and-recognition-with-opencv/</a></dl>
+
+	            <li>"9 OpenCV Tutorials for Hand Gesture Detection and Recognition" by Dragos Calin</li>
+	            <dl><a href="http://www.intorobotics.com/9-opencv-tutorials-hand-gesture-detection-recognition/">http://www.intorobotics.com/9-opencv-tutorials-hand-gesture-detection-recognition/</a></dl>
+
+	            <li>"Hand Tracking and Gesture Detection (OpenCV)" by Lakshminarayanan Srinivasan</li>
+	            <dl><a href="http://s-ln.in/2013/04/18/hand-tracking-and-gesture-detection-opencv/">http://s-ln.in/2013/04/18/hand-tracking-and-gesture-detection-opencv/</a></dl>
+            </ul>
+        </p>
+
+    </div>
+</body>
+</html>
