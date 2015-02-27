@@ -158,7 +158,7 @@ void readPalm(Image *img) {
         
         imshow("Output", img->source);
         out << img->source;
-        if (waitKey(30) > - 0) {
+        if (waitKey(30) >= 0) {
             break;
         }
     }
@@ -266,7 +266,7 @@ void normalizeColor(Image *img) {
 }
 
 // produceBinary()
-// Gets the loewr and upper bound of the skin coor and copy to imgProcessList
+// Produces several binary images to extract hand from the background
 void produceBinary(Image *img) {
     Scalar lowBound;
     Scalar upBound;
@@ -404,7 +404,7 @@ int main(int argc, const char * argv[]) {
         blur(img.sourceLR, img.sourceLR, Size(3,3));
         cvtColor(img.sourceLR, img.sourceLR, CV_BGR2HLS);
         
-        // Detect lower and upper bound of skin color
+        // Produce binary images to extract hand from scene
         produceBinary(&img);
         
         cvtColor(img.sourceLR, img.sourceLR, CV_HLS2BGR);
